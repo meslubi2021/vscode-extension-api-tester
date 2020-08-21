@@ -1,7 +1,7 @@
 {
   "name": "vscode-extension-api-tester",
   "displayName": "InterSystems® Extension API Tester",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "0.0.2-SNAPSHOT",
   "preview": true,
   "publisher": "intersystems-community",
   "description": "Facilitates testing of APIs published by VS Code extensions from the InterSystems Developer Community.",
@@ -76,6 +76,16 @@
         "command": "intersystems-community.vscode-extension-api-tester.servermanager.pickServerDetailed",
         "category": "Extension API Tester",
         "title": "Server Selection with Details [Server Manager]"
+      },
+      {
+        "command": "intersystems-community.vscode-extension-api-tester.servermanager.onDidChangePassword",
+        "category": "Extension API Tester",
+        "title": "Watch for Password Changes [Server Manager]"
+      },
+      {
+        "command": "intersystems-community.vscode-extension-api-tester.servermanager.offDidChangePassword",
+        "category": "Extension API Tester",
+        "title": "Stop Watching for Password Changes [Server Manager]"
       },
       {
         "command": "intersystems-community.vscode-extension-api-tester.vscode-objectscript.serverOfCurrentDocument",

@@ -26,6 +26,16 @@ export function activate(context: vscode.ExtensionContext) {
         })
     );
 	context.subscriptions.push(
+		vscode.commands.registerCommand(`${extensionId}.servermanager.onDidChangePassword`, () => {
+            servermanager.onDidChangePassword();
+        })
+    );
+	context.subscriptions.push(
+		vscode.commands.registerCommand(`${extensionId}.servermanager.offDidChangePassword`, () => {
+            servermanager.offDidChangePassword();
+        })
+    );
+	context.subscriptions.push(
 		vscode.commands.registerCommand(`${extensionId}.vscode-objectscript.serverOfCurrentDocument`, () => {
             vscode_objectscript.serverOfCurrentDocument();
         })
@@ -33,4 +43,27 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
+}
+
+export interface ApiInfo {
+    api?: any,
+    version?: string
+}
+
+export async function getApiInfo(targetExtensionId: string): Promise<ApiInfo> {
+    const targetExtension = vscode.extensions.getExtension(targetExtensionId);
+    if (!targetExtension) {
+        vscode.window.showErrorMessage(`Extension '${targetExtensionId}' is not installed, or has been disabled.`)
+        return {};
+    }
+    if (!targetExtension.isActive) {
+        await targetExtension.activate();
+    }
+    const api = targetExtension.exports;
+
+    if (!api) {
+        vscode.window.showErrorMessage(`API missing from extension ${targetExtensionId}@${targetExtension.packageJSON.version}`);
+        return {};
+    }
+    return { api, version: targetExtension.packageJSON.version };
 }
