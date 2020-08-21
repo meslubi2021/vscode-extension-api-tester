@@ -1,6 +1,6 @@
 {
   "name": "vscode-extension-api-tester",
-  "displayName": "Extension API Tester",
+  "displayName": "InterSystems® Extension API Tester",
   "version": "0.0.1-SNAPSHOT",
   "preview": true,
   "publisher": "intersystems-community",
