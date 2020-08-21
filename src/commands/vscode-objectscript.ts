@@ -1,20 +1,17 @@
 import * as vscode from 'vscode';
+import { getApiInfo } from '../extension';
 
 const targetExtensionId = 'daimor.vscode-objectscript';
 
 export async function serverOfCurrentDocument() {
-    const targetExtension = vscode.extensions.getExtension(targetExtensionId);
-    if (!targetExtension) {
-        vscode.window.showErrorMessage(`Extension '${targetExtensionId}' is not installed, or has been disabled.`)
-        return
-    }
-    if (!targetExtension.isActive) {
-        await targetExtension.activate();
-    }
-    const api = targetExtension.exports;
+    const { api, version } = await getApiInfo(targetExtensionId);
 
-    if (!api || typeof api.serverForUri !== 'function') {
-        vscode.window.showErrorMessage(`serverForUri API missing from extension ${targetExtensionId}@${targetExtension.packageJSON.version}`);
+    if (!api) {
+        return;
+    }
+
+    if (typeof api.serverForUri !== 'function') {
+        vscode.window.showErrorMessage(`serverForUri API missing from extension ${targetExtensionId}@${version}`);
         return;
     }
     const uri = vscode.window.activeTextEditor?.document.uri;
