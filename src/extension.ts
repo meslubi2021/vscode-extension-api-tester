@@ -40,6 +40,11 @@ export function activate(context: vscode.ExtensionContext) {
             vscode_objectscript.serverOfCurrentDocument();
         })
     );
+	context.subscriptions.push(
+		vscode.commands.registerCommand(`${extensionId}.vscode-objectscript.serverDocumentUriOfCurrentDocument`, () => {
+            vscode_objectscript.serverDocumentUriOfCurrentDocument();
+        })
+    );
 }
 
 export function deactivate() {
