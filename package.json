@@ -1,7 +1,7 @@
 {
   "name": "vscode-extension-api-tester",
   "displayName": "InterSystems® Extension API Tester",
-  "version": "0.0.2-SNAPSHOT",
+  "version": "0.0.3-SNAPSHOT",
   "preview": true,
   "publisher": "intersystems-community",
   "description": "Facilitates testing of APIs published by VS Code extensions from the InterSystems Developer Community.",
@@ -91,6 +91,11 @@
         "command": "intersystems-community.vscode-extension-api-tester.vscode-objectscript.serverOfCurrentDocument",
         "category": "Extension API Tester",
         "title": "Server of Current Document [ObjectScript]"
+      },
+      {
+        "command": "intersystems-community.vscode-extension-api-tester.vscode-objectscript.serverDocumentUriOfCurrentDocument",
+        "category": "Extension API Tester",
+        "title": "Uri of Server Version of Current Document [ObjectScript]"
       }
     ]
   }
