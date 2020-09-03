@@ -13,18 +13,18 @@ class VSCodeLogger implements Logger {
   private _outputChannel: vscode.OutputChannel;
   private _createDate: Date = new Date();
 
-  trace(message: string, ...args: any[]):Date {
+  trace(message: string, ...args: any[]): Date {
     return this._commonTrace(undefined, message, ...args);
   }
 
-  endTrace(since: Date, message: string, ...args: any[]):Date {
+  endTrace(since: Date, message: string, ...args: any[]): Date {
     return this._commonTrace(since, message, ...args);
   }
 
-  private _commonTrace(since: Date | undefined, message: string, ...args: any[]):Date {
+  private _commonTrace(since: Date | undefined, message: string, ...args: any[]): Date {
     const now = new Date();
     const sinceStart = `${((now.valueOf() - this._createDate.valueOf()) / 1000).toFixed(3)} `;
-    const sinceLastTrace = (since) ? `(+${(now.valueOf() - since.valueOf()) / 1000}) ` : '';
+    const sinceLastTrace = since ? `(+${(now.valueOf() - since.valueOf()) / 1000}) ` : '';
     this._print(`[trace@${sinceStart}${sinceLastTrace}]`, message, ...args);
     return now;
   }
@@ -55,7 +55,7 @@ class VSCodeLogger implements Logger {
     }
 
     const msg = args
-      .map(arg => {
+      .map((arg) => {
         if (arg instanceof Error) {
           return arg.stack;
         } else if (typeof arg === 'object') {

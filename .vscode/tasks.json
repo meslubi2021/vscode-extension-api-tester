@@ -22,6 +22,14 @@
       },
       "isBackground": true,
       "problemMatcher": "$tsc-watch"
-    }
+    },
+		{
+			"type": "npm",
+			"script": "eslint",
+			"problemMatcher": {
+				"source": "eslint",
+				"base": "$eslint-stylish"
+			}
+		},
   ]
 }
