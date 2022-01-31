@@ -1,18 +1,18 @@
 import * as vscode from "vscode";
-import { getApiInfo } from "../extension";
+import { AUTHENTICATION_PROVIDER, getApiInfo } from "../extension";
 
 const targetExtensionId = "intersystems-community.servermanager";
 
-interface WebServerSpec {
+interface IWebServerSpec {
   scheme: string;
   host: string;
   port: number;
   pathPrefix: string;
 }
 
-interface ServerSpec {
+interface IServerSpec {
   name: string;
-  webServer: WebServerSpec;
+  webServer: IWebServerSpec;
   username: string;
   password: string;
   description: string;
@@ -49,8 +49,9 @@ async function commonTestPickServer(options?: vscode.QuickPickOptions, flushCred
 
   const name: string = await api.pickServer(undefined, options);
   if (name) {
-    const connSpec: ServerSpec = await api.getServerSpec(name, undefined, flushCredentialCache);
+    const connSpec: IServerSpec = await api.getServerSpec(name, undefined, flushCredentialCache);
     if (connSpec) {
+      await resolvePassword(connSpec);
       vscode.window.showInformationMessage(
         `Picked server '${connSpec.name}' at ${connSpec.webServer.scheme}://${connSpec.webServer.host}:${
           connSpec.webServer.port
@@ -91,5 +92,20 @@ export async function offDidChangePassword(): Promise<void> {
   if (typeof disposable !== "undefined") {
     disposable.dispose();
     disposable = undefined;
+  }
+}
+
+export async function resolvePassword(serverSpec: IServerSpec): Promise<void> {
+  // This arises if setting says to use authentication provider
+  if (typeof serverSpec.password === "undefined") {
+    const scopes = [serverSpec.name, serverSpec.username || ""];
+    let session = await vscode.authentication.getSession(AUTHENTICATION_PROVIDER, scopes, { silent: true });
+    if (!session) {
+      session = await vscode.authentication.getSession(AUTHENTICATION_PROVIDER, scopes, { createIfNone: true });
+    }
+    if (session) {
+      serverSpec.username = session.scopes[1];
+      serverSpec.password = session.accessToken;
+    }
   }
 }

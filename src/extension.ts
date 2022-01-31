@@ -5,10 +5,42 @@ import * as servermanager from "./commands/servermanager";
 import * as vscode_objectscript from "./commands/vscode-objectscript";
 
 export const extensionId = "intersystems-community.vscode-extension-api-tester";
+export const AUTHENTICATION_PROVIDER = "intersystems-server-credentials";
 
 export function activate(context: vscode.ExtensionContext): void {
   // Register the commands
 
+  context.subscriptions.push(
+    vscode.commands.registerCommand(`${extensionId}.testLogin`, async () => {
+      // Get our session.
+      try {
+        const session = await vscode.authentication.getSession(AUTHENTICATION_PROVIDER, [], {
+          createIfNone: true,
+        });
+        console.log(session);
+      } catch (error) {
+        throw new Error(`vscode.authentication.getSession for ${AUTHENTICATION_PROVIDER} failed}`);
+      }
+    })
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(`${extensionId}.testScopedLogin`, async () => {
+      // Get our session.
+      const session = await vscode.authentication.getSession(AUTHENTICATION_PROVIDER, ["iris201", "johnm"], {
+        createIfNone: true,
+      });
+      console.log(session);
+    })
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(`${extensionId}.testQuietLogin`, async () => {
+      // Get our session.
+      const session = await vscode.authentication.getSession(AUTHENTICATION_PROVIDER, [], {
+        createIfNone: false,
+      });
+      console.log(session);
+    })
+  );
   context.subscriptions.push(
     vscode.commands.registerCommand(`${extensionId}.servermanager.pickServer`, () => {
       servermanager.pickServer();
