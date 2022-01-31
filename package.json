@@ -1,6 +1,6 @@
 {
   "name": "vscode-extension-api-tester",
-  "displayName": "InterSystems® Extension API Tester",
+  "displayName": "InterSystems Extension API Tester",
   "version": "0.0.3-SNAPSHOT",
   "preview": true,
   "publisher": "intersystems-community",
@@ -16,7 +16,7 @@
     "multi-root ready"
   ],
   "engines": {
-    "vscode": "^1.44.0",
+    "vscode": "^1.63.0",
     "node": "^10.2.0"
   },
   "icon": "images/logo.png",
@@ -41,15 +41,14 @@
     "lint-fix": "eslint --fix src/**"
   },
   "dependencies": {
-    "@types/vscode": "^1.44.0"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.6",
     "@types/node": "^8.10.60",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
-    "@typescript-eslint/parser": "^3.4.0",
-    "eslint": "^7.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.21.2",
@@ -58,11 +57,10 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "glob": "^7.1.6",
-    "mocha": "^7.1.2",
+    "mocha": "^9.2.0",
     "prettier": "^2.0.5",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
-    "vsce": "^1.75.0",
     "vscode-test": "^1.3.0"
   },
   "main": "./out/extension",
@@ -71,6 +69,21 @@
   ],
   "contributes": {
     "commands": [
+      {
+        "command": "intersystems-community.vscode-extension-api-tester.testLogin",
+        "category": "Extension API Tester",
+        "title": "Test Login [Server Manager]"
+      },
+      {
+        "command": "intersystems-community.vscode-extension-api-tester.testScopedLogin",
+        "category": "Extension API Tester",
+        "title": "Test Scoped Login [Server Manager]"
+      },
+      {
+        "command": "intersystems-community.vscode-extension-api-tester.testQuietLogin",
+        "category": "Extension API Tester",
+        "title": "Test Quiet Login [Server Manager]"
+      },
       {
         "command": "intersystems-community.vscode-extension-api-tester.servermanager.pickServer",
         "category": "Extension API Tester",
