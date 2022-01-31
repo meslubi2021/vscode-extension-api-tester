@@ -41,6 +41,7 @@
     "lint-fix": "eslint --fix src/**"
   },
   "dependencies": {
+    "@types/vscode": "^1.63.0"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
